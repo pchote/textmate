@@ -293,4 +293,33 @@
 - (BOOL)isPointInImage:(NSPoint)aPoint       { return ([self hitTestForPoint:aPoint] & OakImageAndTextCellHitImage)   == OakImageAndTextCellHitImage;   }
 - (BOOL)isPointInText:(NSPoint)aPoint        { return ([self hitTestForPoint:aPoint] & OakImageAndTextCellHitText)    == OakImageAndTextCellHitText;    }
 - (BOOL)isPointInCloseButton:(NSPoint)aPoint { return ([self hitTestForPoint:aPoint] & OFBPathInfoCellHitCloseButton) == OFBPathInfoCellHitCloseButton; }
+
+// ====================================
+// = Override source list indentation =
+// ====================================
+
+- (NSRect)frameOfCellAtColumn:(NSInteger)column row:(NSInteger)row
+{
+	NSRect r = [super frameOfCellAtColumn:column row:row];
+	r.origin.x -= 5;
+	r.size.width += 5;
+
+	// HighlightStyleSourceList aligns the first child level to the
+	// parent, so manually move all children one level to the right
+	if([self levelForRow:row] > 0)
+		r.origin.x += [self indentationPerLevel];
+	else
+		r.size.width += [self indentationPerLevel];
+
+	return r;
+}
+
+- (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
+{
+	NSRect r = [super frameOfOutlineCellAtRow:row];
+	if([self levelForRow:row] > 0)
+		r.origin.x += [self indentationPerLevel];
+	return r;
+}
+
 @end

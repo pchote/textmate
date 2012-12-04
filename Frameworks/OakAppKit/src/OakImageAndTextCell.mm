@@ -20,7 +20,6 @@
 - (NSRect)imageFrameWithFrame:(NSRect)aRect inControlView:(NSView*)aView
 {
 	aRect.size = self.image.size;
-	aRect.origin.y += 1;
 	aRect.origin.x += 8;
 	if([aView respondsToSelector:@selector(intercellSpacing)])
 		aRect.origin.y -= [(NSOutlineView*)aView intercellSpacing].height / 2;
@@ -31,7 +30,8 @@
 {
 	NSRect imageFrame = [self imageFrameWithFrame:aRect inControlView:aView];
 	NSRect textFrame = aRect;
-	textFrame.origin.x = NSMaxX(imageFrame) + 4;
+	textFrame.origin.x = NSMaxX(imageFrame) + 1;
+	textFrame.origin.y += 1;
 	textFrame.size.width = NSMaxX(aRect) - NSMinX(textFrame);
 	return textFrame;
 }

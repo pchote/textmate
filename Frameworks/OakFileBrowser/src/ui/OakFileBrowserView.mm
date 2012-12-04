@@ -54,6 +54,8 @@ OAK_DEBUG_VAR(FileBrowser_View);
 	outlineView.allowsMultipleSelection  = YES;
 	outlineView.autoresizesOutlineColumn = NO;
 	outlineView.headerView               = nil;
+	outlineView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleSourceList;
+	outlineView.rowHeight = 17;
 
 	scrollView.documentView              = outlineView;
 
@@ -63,6 +65,7 @@ OAK_DEBUG_VAR(FileBrowser_View);
 
 	NSCell* cell       = [[OFBPathInfoCell new] autorelease];
 	cell.lineBreakMode = NSLineBreakByTruncatingMiddle;
+	cell.font = [NSFont systemFontOfSize:11];
 	[cell setEditable:YES];
 
 	NSTableColumn* tableColumn = [[NSTableColumn new] autorelease];

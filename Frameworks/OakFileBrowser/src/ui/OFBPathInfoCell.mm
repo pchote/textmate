@@ -30,9 +30,14 @@
 	static NSString* const startCol[] = { @"#CFCFCF", @"#D4EE9C", @"#DDBDEA", @"#ACD0FE", @"#F8F79C", @"#B2B2B2", @"#F9D194" };
 	static NSString* const stopCol[]  = { @"#A8A8A8", @"#AFDC49", @"#C186D7", @"#5B9CFE", @"#ECDF4A", @"#FC605C", @"#F6AC46" };
 
-	NSRect r = NSIntegralRect(NSInsetRect(cellFrame, 2, 0));
+	NSRect r = NSIntegralRect(NSInsetRect(cellFrame, 5, 0));
+
 	if([self isHighlighted])
-		r.size.height = r.size.width = 16;
+	{
+		r.origin.x += r.size.width - 17;
+		r.size.height = 16;
+		r.size.width = 17;
+	}
 
 	NSGradient* gradient = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithString:startCol[labelColorIndex-1]]
                                                          endingColor:[NSColor colorWithString:stopCol[labelColorIndex-1]]] autorelease];
@@ -49,7 +54,8 @@
 {
 	if(!self.isOpen)
 		return NSZeroRect;
-	return NSMakeRect(NSMaxX(cellFrame) - self.closeIcon.size.width, NSMaxY(cellFrame) - (cellFrame.size.height + self.closeIcon.size.height) / 2, self.closeIcon.size.width, self.closeIcon.size.height);
+
+	return NSMakeRect(NSMaxX(cellFrame) - self.closeIcon.size.width - 8, NSMaxY(cellFrame) - (cellFrame.size.height + self.closeIcon.size.height) / 2, self.closeIcon.size.width, self.closeIcon.size.height);
 }
 
 - (void)redrawFrame:(OakTimer*)timer
